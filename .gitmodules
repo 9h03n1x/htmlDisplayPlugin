@@ -1,0 +1,3 @@
+[submodule "docs/streamdeck-kb"]
+	path = docs/streamdeck-kb
+	url = https://github.com/9h03n1x/rag-streamdeck-dev.git

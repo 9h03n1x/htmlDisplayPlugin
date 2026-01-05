@@ -1,0 +1,47 @@
+{
+	"Name": "HTMLDisplay",
+	"Version": "0.1.0.0",
+	"Author": "Nicco Hagedorn",
+	"Actions": [
+		{
+			"Name": "Show HTML",
+			"UUID": "com.nicco-hagedorn.htmldisplay.show",
+			"Icon": "imgs/actions/show/icon",
+			"Tooltip": "Displays HTML content in a new window.",
+			"PropertyInspectorPath": "ui/index.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/show/key",
+					"TitleAlignment": "middle"
+				}
+			]
+		}
+	],
+	"Category": "HTMLDisplay",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "this will display a html from the property inspector in a new window",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.4"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "com.nicco-hagedorn.htmldisplay"
+}
