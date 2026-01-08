@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144">
+  <defs>
+    <linearGradient id="catGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer window frame -->
+  <rect x="20" y="24" width="104" height="96" rx="12" ry="12" fill="url(#catGradient)"/>
+  
+  <!-- Inner content area -->
+  <rect x="28" y="44" width="88" height="68" rx="6" ry="6" fill="#1e1b4b"/>
+  
+  <!-- Window header -->
+  <rect x="28" y="32" width="88" height="20" rx="6" ry="6" fill="#4c1d95"/>
+  <rect x="28" y="44" width="88" height="8" fill="#4c1d95"/>
+  
+  <!-- Window dots -->
+  <circle cx="42" cy="42" r="4" fill="#f87171"/>
+  <circle cx="56" cy="42" r="4" fill="#fbbf24"/>
+  <circle cx="70" cy="42" r="4" fill="#34d399"/>
+  
+  <!-- HTML code lines representation -->
+  <g fill="#a5b4fc" opacity="0.9">
+    <!-- Line 1: opening tag -->
+    <rect x="36" y="56" width="8" height="4" rx="1"/>
+    <rect x="48" y="56" width="24" height="4" rx="1"/>
+    <rect x="76" y="56" width="8" height="4" rx="1"/>
+    
+    <!-- Line 2: content indented -->
+    <rect x="44" y="68" width="16" height="4" rx="1"/>
+    <rect x="64" y="68" width="32" height="4" rx="1"/>
+    
+    <!-- Line 3: more content -->
+    <rect x="44" y="80" width="28" height="4" rx="1"/>
+    <rect x="76" y="80" width="20" height="4" rx="1"/>
+    
+    <!-- Line 4: closing tag -->
+    <rect x="36" y="92" width="8" height="4" rx="1"/>
+    <rect x="48" y="92" width="20" height="4" rx="1"/>
+    <rect x="72" y="92" width="8" height="4" rx="1"/>
+  </g>
+</svg>

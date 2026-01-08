@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Master Guide</title>
+    
+    <!-- Google Sheets themed icon with grid and "?" for guide/help -->
+    <meta name="sd-preview" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQiIGhlaWdodD0iMTQ0IiB2aWV3Qm94PSIwIDAgMTQ0IDE0NCI+CiAgPHJlY3Qgd2lkdGg9IjE0NCIgaGVpZ2h0PSIxNDQiIHJ4PSIxNiIgZmlsbD0iIzBGOUQ1OCIvPgogIDxyZWN0IHg9IjIwIiB5PSIxOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSIxMDgiIHJ4PSI4IiBmaWxsPSJ3aGl0ZSIvPgogIDxsaW5lIHgxPSIyMCIgeTE9IjUyIiB4Mj0iMTI0IiB5Mj0iNTIiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iNzgiIHgyPSIxMjQiIHkyPSI3OCIgc3Ryb2tlPSIjYWFhIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8bGluZSB4MT0iMjAiIHkxPSIxMDQiIHgyPSIxMjQiIHkyPSIxMDQiIHN0cm9rZT0iI2FhYSIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPGxpbmUgeDE9IjU0IiB5MT0iNTIiIHgyPSI1NCIgeTI9IjEyNiIgc3Ryb2tlPSIjYWFhIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8bGluZSB4MT0iOTAiIHkxPSI1MiIgeDI9IjkwIiB5Mj0iMTI2IiBzdHJva2U9IiNhYWEiIHN0cm9rZS13aWR0aD0iNCIvPgogIDxyZWN0IHg9IjIwIiB5PSIxOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMwYTZjM2MiLz4KICA8cmVjdCB4PSIyMCIgeT0iNDQiIHdpZHRoPSIxMDQiIGhlaWdodD0iOCIgZmlsbD0iIzBhNmMzYyIvPgogIDx0ZXh0IHg9IjM3IiB5PSI0MiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPkE8L3RleHQ+CiAgPHRleHQgeD0iNjgiIHk9IjQyIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSI+QjwvdGV4dD4KICA8dGV4dCB4PSIxMDIiIHk9IjQyIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSI+QzwvdGV4dD4KICA8Y2lyY2xlIGN4PSI3MiIgY3k9IjkwIiByPSIzMCIgZmlsbD0iIzBGOUQ1OCIvPgogIDxjaXJjbGUgY3g9IjcyIiBjeT0iOTAiIHI9IjI2IiBmaWxsPSJ3aGl0ZSIvPgogIDx0ZXh0IHg9IjcyIiB5PSIxMDIiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMwRjlENTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPj88L3RleHQ+Cjwvc3ZnPg==">
+
+    <style>
+        /* BASE LAYOUT */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+        }
+
+        .card {
+            background-color: #262626;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: left;
+            width: 85%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #0F9D58 #333;
+        }
+
+        .card::-webkit-scrollbar { width: 10px; }
+        .card::-webkit-scrollbar-track { background: #333; border-radius: 5px; }
+        .card::-webkit-scrollbar-thumb { background-color: #0F9D58; border-radius: 5px; border: 2px solid #333; }
+
+        h1 {
+            color: #0F9D58;
+            margin-top: 0;
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #81c995;
+            margin-top: 40px;
+            font-size: 1.4rem;
+            border-left: 5px solid #0F9D58;
+            padding-left: 15px;
+            background: rgba(15, 157, 88, 0.1);
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        p { line-height: 1.6; color: #ccc; margin-bottom: 10px; }
+        
+        .explainer {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 8px;
+        }
+
+        kbd {
+            background-color: #444;
+            border-radius: 4px;
+            border: 1px solid #555;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+            color: #fff;
+            display: inline-block;
+            font-size: 0.85em;
+            font-weight: 600;
+            line-height: 1;
+            padding: 4px 8px;
+            font-family: 'Consolas', monospace;
+            margin: 0 2px;
+        }
+
+        code {
+            background: #1a1a1a;
+            color: #a5d6a7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Wider for instructions */
+            gap: 20px;
+        }
+
+        .item {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            transition: transform 0.2s ease;
+        }
+        
+        .item:hover {
+            transform: translateY(-2px);
+            border-color: #0F9D58;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .icon-mock { 
+            color: #0F9D58; 
+            margin-right: 10px; 
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.2);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .item-title { font-weight: bold; color: #fff; font-size: 1.1rem; }
+
+        /* USER ACTION HIGHLIGHTS */
+        .step-box {
+            background: #222;
+            border-left: 3px solid #FFD700; /* Gold for attention */
+            padding: 10px 12px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #ddd;
+            border-radius: 0 4px 4px 0;
+            line-height: 1.6;
+        }
+        
+        .action-needed {
+            color: #FFD700;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .formula-line { color: #81c995; font-family: monospace; }
+        .user-click { color: #58a6ff; font-weight: bold; }
+
+        /* ALERT BOX */
+        .alert-box {
+            background: rgba(234, 67, 53, 0.1);
+            border-left: 5px solid #ea4335;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 4px;
+        }
+        
+        .close-btn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 40px auto 10px auto;
+            padding: 12px;
+            background-color: #0F9D58;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover { background-color: #0b8043; }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Google Sheets Master Guide</h1>
+
+        <h2>🪄 Power Formulas (Important!)</h2>
+        <p style="background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 6px; border: 1px solid #FFD700;">
+            ⚠️ <strong>Read First:</strong> These buttons are <em>Assistants</em>, not Magicians. They type the difficult formula structure for you, but <strong>YOU must tell them which cells to calculate</strong> by clicking.
+        </p>
+        
+        <div class="item-grid">
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">{}</span>
+                    <span class="item-title">TRIM Clean</span>
+                </div>
+                <p class="explainer">Use this to fix "messy" text that has hidden spaces.</p>
+                <div class="step-box">
+                    <span class="action-needed">Steps to use:</span>
+                    1. Press Stream Deck Button.<br>
+                    2. <span class="user-click">Click the cell</span> with the messy text.<br>
+                    3. Press Enter.<br>
+                    <hr style="border: 0; border-top: 1px solid #444; margin: 5px 0;">
+                    <em>Result:</em> <code>=TRIM(<span class="user-click">A1</span>)</code>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">🛡️</span>
+                    <span class="item-title">IFERROR Wrap</span>
+                </div>
+                <p class="explainer">Use this <em>before</em> typing a risky formula (like division).</p>
+                <div class="step-box">
+                    <span class="action-needed">Steps to use:</span>
+                    1. Press Stream Deck Button.<br>
+                    2. Type your math (e.g., <code>100/0</code>).<br>
+                    3. Press Enter.<br>
+                    <hr style="border: 0; border-top: 1px solid #444; margin: 5px 0;">
+                    <em>Result:</em> <code>=IFERROR(<span class="user-click">100/0</span>, "")</code>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">🔍</span>
+                    <span class="item-title">XLOOKUP</span>
+                </div>
+                <p class="explainer">The button prepares the search, you choose the data.</p>
+                <div class="step-box">
+                    <span class="action-needed">Steps to use:</span>
+                    1. Press Stream Deck Button.<br>
+                    2. <span class="user-click">Click Search Value</span> (e.g. ID). Type <code>,</code><br>
+                    3. <span class="user-click">Select Column A</span> (Source). Type <code>,</code><br>
+                    4. <span class="user-click">Select Column B</span> (Result). Enter.<br>
+                    <hr style="border: 0; border-top: 1px solid #444; margin: 5px 0;">
+                    <em>Result:</em> <code>=XLOOKUP(<span class="user-click">A2</span>, <span class="user-click">D:D</span>, <span class="user-click">E:E</span>...)</code>
+                </div>
+            </div>
+            
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">📊</span>
+                    <span class="item-title">Sparkline</span>
+                </div>
+                <p class="explainer">Visualizes a row of numbers as a tiny bar chart.</p>
+                <div class="step-box">
+                    <span class="action-needed">Steps to use:</span>
+                    1. Press Stream Deck Button.<br>
+                    2. <span class="user-click">Drag to select</span> the numbers you want to graph.<br>
+                    3. Press Enter.<br>
+                    <hr style="border: 0; border-top: 1px solid #444; margin: 5px 0;">
+                    <em>Result:</em> <code>=SPARKLINE(<span class="user-click">A1:E1</span>,...)</code>
+                </div>
+            </div>
+        </div>
+        
+        <h2>⚡ Essentials & Formatting</h2>
+        <div class="item-grid">
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">123</span>
+                    <span class="item-title">Paste Value</span>
+                </div>
+                <p>Command: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd></p>
+                <p class="explainer">Pastes text only. Strips bold, colors, and links.</p>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">T</span>
+                    <span class="item-title">Wrap Text</span>
+                </div>
+                <p>Command: Macro</p>
+                <p class="explainer">Fixes cut-off text by making the row taller.</p>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">$</span>
+                    <span class="item-title">Format Currency</span>
+                </div>
+                <p>Command: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd></p>
+                <p class="explainer">Formats numbers as $1,000.00</p>
+            </div>
+        </div>
+
+        <h2>🧊 Structure & Organization</h2>
+        <div class="item-grid">
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">❄️</span>
+                    <span class="item-title">Freeze Header</span>
+                </div>
+                <p class="explainer">Locks the top row so titles stay visible when scrolling.</p>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="icon-mock">Y</span>
+                    <span class="item-title">Filter View</span>
+                </div>
+                <p>Command: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></p>
+                <p class="explainer">Toggles the filter arrows on table headers.</p>
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <strong style="color: #ea4335;">🔧 Troubleshooting</strong>
+            <ul style="margin: 5px 0 0 20px; padding:0; color: #ffcccb;">
+                <li style="margin-bottom: 8px;">
+                    <strong>Formulas look like <code>=TRIM(;)</code>?</strong><br>
+                    This profile is for <strong>US/UK Locale</strong>. If your Sheets are in German/French, formulas use semicolons <code>;</code> instead of commas <code>,</code>. Change your Sheet settings to USA.
+                </li>
+                 <li style="margin-bottom: 8px;">
+                    <strong>Filter not working?</strong><br>
+                    Check AMD Radeon Software settings, it might be blocking the shortcut.
+                </li>
+            </ul>
+        </div>
+
+        <button onclick="window.close()" class="close-btn">Close Guide</button>
+    </div>
+</body>
+</html>

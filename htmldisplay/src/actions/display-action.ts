@@ -1,4 +1,7 @@
-import streamDeck, { action, KeyDownEvent, SingletonAction, WillAppearEvent, DidReceiveSettingsEvent } from "@elgato/streamdeck";
+import streamDeck, { action, KeyDownEvent, SingletonAction, WillAppearEvent, DidReceiveSettingsEvent, SendToPluginEvent } from "@elgato/streamdeck";
+
+// Define JsonValue type locally since it's not exported from @elgato/streamdeck
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 import open, { apps } from 'open';
 import { ServerManager } from "../managers/ServerManager";
 import { ImageGenerator } from "../utils/ImageGenerator";
@@ -156,20 +159,23 @@ export class DisplayAction extends SingletonAction<DisplaySettings> {
         }
     }
 
-    // Listen for messages from Property Inspector
-    // Note: The current SDK wrapper might handle this differently, but usually it's via streamDeck.actions...
-    // For SingletonAction, we might need to hook into the streamDeck client directly or check if there is an onSendToPlugin handler.
-    // Checking docs/core-concepts/action-development.md... 
-    // It mentions onSendToPlugin. Let's implement it.
+    /**
+     * Handle messages from the Property Inspector.
+     * This is called when the PI sends data to the plugin using sendToPlugin().
+     */
+    override async onSendToPlugin(ev: SendToPluginEvent<JsonValue, DisplaySettings>) {
+        const payload = ev.payload as { event?: string } | undefined;
 
-    // @ts-ignore - The type definition might be missing in the snippet I saw, but it's standard.
-    async onSendToPlugin(ev: any) {
-        if (ev.payload.event === 'refreshPreview') {
-             // We need the action instance to set the image. 
-             // In SingletonAction, 'ev' usually contains the context/actionId.
-             // We'll need to fetch current settings and update.
-             // This part is tricky in SingletonAction without the specific action instance passed easily if not in the event.
-             // But usually ev has context.
+        if (payload?.event === 'refreshPreview') {
+            const actionId = ev.action.id;
+            const settings = this.settingsCache.get(actionId);
+
+            if (settings) {
+                console.log(`[DisplayAction] Refreshing preview for action: ${actionId}`);
+                await this.updateImage(actionId, settings);
+            } else {
+                console.warn(`[DisplayAction] No cached settings found for action: ${actionId}`);
+            }
         }
     }
 }

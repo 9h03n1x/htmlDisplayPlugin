@@ -1,6 +1,6 @@
 {
-	"Name": "HTMLDisplay",
-	"Version": "0.1.0.0",
+	"Name": "Info Display",
+	"Version": "1.0.0.0",
 	"Author": "Nicco Hagedorn",
 	"Actions": [
 		{
@@ -18,16 +18,32 @@
 					"TitleAlignment": "middle"
 				}
 			]
+		},
+		{
+			"Name": "Show Markdown",
+			"UUID": "com.nicco-hagedorn.htmldisplay.markdown",
+			"Icon": "imgs/actions/markdown/icon",
+			"Tooltip": "Displays Markdown content rendered as HTML in a new window.",
+			"PropertyInspectorPath": "ui/markdown.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/markdown/key",
+					"TitleAlignment": "middle"
+				}
+			]
 		}
 	],
-	"Category": "HTMLDisplay",
+	"Category": "Info Display",
 	"CategoryIcon": "imgs/plugin/category-icon",
 	"CodePath": "bin/plugin.js",
 	"Description": "this will display a html from the property inspector in a new window",
 	"Icon": "imgs/plugin/marketplace",
-	"SDKVersion": 2,
+	"SDKVersion": 3,
 	"Software": {
-		"MinimumVersion": "6.4"
+		"MinimumVersion": "7.0"
 	},
 	"OS": [
 		{

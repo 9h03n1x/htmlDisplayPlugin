@@ -31,6 +31,14 @@ To set a custom icon for your key, add the following meta tag to your HTML:
 
 If no meta tag is found, the plugin will generate a simple text preview.
 
+## Info Display Template
+
+Use [info-display-template.html](info-display-template.html) as a starting point for new popup-style “info displays”.
+
+1. Set **Content Source** to **Local File**
+2. Select `info-display-template.html`
+3. Duplicate/edit it to create additional displays
+
 ## Development
 
 1.  Install dependencies: `npm install`

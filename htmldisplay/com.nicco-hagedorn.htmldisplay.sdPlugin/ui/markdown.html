@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Markdown Display Settings</title>
+    <meta charset="utf-8" />
+    <script src="https://sdpi-components.dev/releases/v3/sdpi-components.js"></script>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <sdpi-item label="Content Source">
+        <sdpi-select setting="sourceType" id="sourceType" onchange="window.updateSourceVisibility()">
+            <option value="direct" selected>Direct Input</option>
+            <option value="file">Local File</option>
+        </sdpi-select>
+    </sdpi-item>
+
+    <div id="directInputGroup">
+        <sdpi-item label="Markdown">
+            <sdpi-textarea setting="markdownContent" rows="10" placeholder="# Hello World - Write your Markdown here..."></sdpi-textarea>
+        </sdpi-item>
+    </div>
+
+    <div id="fileInputGroup" class="hidden">
+        <sdpi-item label="Select File">
+            <sdpi-file setting="filePath" accept=".md,.markdown,.txt"></sdpi-file>
+        </sdpi-item>
+    </div>
+
+    <sdpi-item label="Theme">
+        <sdpi-select setting="theme">
+            <option value="dark" selected>Dark</option>
+            <option value="light">Light</option>
+        </sdpi-select>
+    </sdpi-item>
+
+    <sdpi-item label="Window Mode">
+        <sdpi-select setting="windowMode" id="windowMode" onchange="window.updateWindowModeVisibility()">
+            <option value="popup" selected>Minimalist Popup</option>
+            <option value="browser">Default Browser</option>
+        </sdpi-select>
+    </sdpi-item>
+
+    <div id="popupSizeGroup">
+        <sdpi-item label="Width">
+            <sdpi-textfield setting="windowWidth" value="800" type="number"></sdpi-textfield>
+        </sdpi-item>
+        <sdpi-item label="Height">
+            <sdpi-textfield setting="windowHeight" value="600" type="number"></sdpi-textfield>
+        </sdpi-item>
+    </div>
+
+    <sdpi-item label="Preview">
+        <sdpi-button id="refreshPreview">Refresh Preview</sdpi-button>
+    </sdpi-item>
+    <sdpi-item>
+        <p style="font-size: 0.8em; color: #999;">
+            Markdown will be rendered as HTML with syntax highlighting.
+        </p>
+    </sdpi-item>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+

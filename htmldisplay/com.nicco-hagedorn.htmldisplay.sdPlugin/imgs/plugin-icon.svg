@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 288">
+  <defs>
+    <linearGradient id="pluginBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="windowShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1e1b4b" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  
+  <!-- Subtle background glow -->
+  <circle cx="144" cy="144" r="120" fill="#4338ca" opacity="0.2"/>
+  
+  <!-- Main window with shadow -->
+  <g filter="url(#dropShadow)">
+    <rect x="44" y="60" width="200" height="168" rx="16" ry="16" fill="url(#pluginBg)"/>
+  </g>
+  
+  <!-- Window shine overlay -->
+  <rect x="44" y="60" width="200" height="168" rx="16" ry="16" fill="url(#windowShine)"/>
+  
+  <!-- Window header -->
+  <rect x="44" y="60" width="200" height="36" rx="16" ry="16" fill="#3730a3"/>
+  <rect x="44" y="80" width="200" height="16" fill="#3730a3"/>
+  
+  <!-- Window control dots with subtle shadows -->
+  <g>
+    <circle cx="72" cy="78" r="8" fill="#ef4444"/>
+    <circle cx="72" cy="76" r="8" fill="#f87171"/>
+    
+    <circle cx="96" cy="78" r="8" fill="#d97706"/>
+    <circle cx="96" cy="76" r="8" fill="#fbbf24"/>
+    
+    <circle cx="120" cy="78" r="8" fill="#059669"/>
+    <circle cx="120" cy="76" r="8" fill="#34d399"/>
+  </g>
+  
+  <!-- HTML content area -->
+  <rect x="56" y="108" width="176" height="108" rx="8" ry="8" fill="#1e1b4b" opacity="0.4"/>
+  
+  <!-- HTML brackets < / > with glow -->
+  <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left bracket < -->
+    <path d="M100 140 L72 164 L100 188"/>
+    <!-- Slash / -->
+    <line x1="134" y1="132" x2="154" y2="196"/>
+    <!-- Right bracket > -->
+    <path d="M188 140 L216 164 L188 188"/>
+  </g>
+  
+  <!-- Subtle bracket glow -->
+  <g fill="none" stroke="#a5b4fc" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity="0.3">
+    <path d="M100 140 L72 164 L100 188"/>
+    <line x1="134" y1="132" x2="154" y2="196"/>
+    <path d="M188 140 L216 164 L188 188"/>
+  </g>
+</svg>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    INFO DISPLAY TEMPLATE (HTMLDisplay Stream Deck Plugin)
+
+    Purpose:
+    - A clean, copy/paste starting point for “info display” popups.
+
+    How to use with this plugin:
+    - Property Inspector -> Content Source:
+      - "Local File": point at this file.
+      - "Direct Input": paste the HTML (but note: relative assets won't work there).
+
+    Relative assets (Local File mode only):
+    - Any relative src/href/url(...) references are rewritten and served from:
+        /static/<actionId>/<relative-path>
+      So you can keep assets next to this HTML file.
+
+    Key icon preview:
+    - Add sd-preview meta. For Local File: can be a relative path.
+    - For Direct Input: should be a base64 data URL.
+  -->
+
+  <title>Info Display</title>
+
+  <!-- OPTION A (recommended for Local File): put icon.png next to this HTML and use a relative path -->
+  <!-- <meta name="sd-preview" content="./icon.png"> -->
+
+  <!-- OPTION B (works everywhere): base64 data URL (png/svg) -->
+  <!-- <meta name="sd-preview" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0i..." /> -->
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --bg: #141414;
+      --panel: #1f1f1f;
+      --border: #2e2e2e;
+      --text: #f2f2f2;
+      --muted: #bdbdbd;
+      --accent: #58a6ff;
+      --good: #3fb950;
+      --warn: #d29922;
+      --bad: #f85149;
+
+      --radius: 12px;
+      --pad: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    .wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      width: min(980px, 96vw);
+      max-height: 92vh;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    header {
+      padding: var(--pad);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    main {
+      padding: var(--pad);
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    main::-webkit-scrollbar { width: 10px; }
+    main::-webkit-scrollbar-track { background: transparent; }
+    main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    section h2 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    p {
+      margin: 8px 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    ul {
+      margin: 8px 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    code, pre {
+      font-family: var(--mono);
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+      color: #dbeafe;
+    }
+
+    pre {
+      margin: 10px 0 0 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.25);
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    .dot.good { background: var(--good); }
+    .dot.warn { background: var(--warn); }
+    .dot.bad { background: var(--bad); }
+
+    footer {
+      padding: 12px var(--pad);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      border-color: rgba(88, 166, 255, 0.6);
+      background: rgba(88, 166, 255, 0.10);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="document" aria-label="Info Display">
+      <header>
+        <div>
+          <h1 class="title" id="title">Info Display Title</h1>
+          <p class="subtitle" id="subtitle">Short subtitle or context (optional)</p>
+        </div>
+        <div class="meta">
+          <span class="pill" title="Status">
+            <span class="dot good" aria-hidden="true"></span>
+            <span id="statusText">Ready</span>
+          </span>
+          <span class="pill" title="Last updated">
+            <span aria-hidden="true">⏱</span>
+            <span id="updatedAt">—</span>
+          </span>
+        </div>
+      </header>
+
+      <main>
+        <!--
+          AGENT INSTRUCTIONS (for generating a new display):
+
+          1) Keep the overall structure (header / main / footer) intact.
+          2) Edit only content inside <main> (and maybe the <title>).
+          3) Prefer simple HTML/CSS, no frameworks.
+          4) Avoid external JS/CSS unless required.
+          5) If you need images/CSS/JS, place them next to this file and reference relatively (Local File mode).
+
+          Replacements you likely want to do:
+          - #title text
+          - #subtitle text
+          - Replace the sample sections below with your content
+        -->
+
+        <div class="grid">
+          <section>
+            <h2>Overview</h2>
+            <p>
+              Put the main explanation here. Keep it scannable; short paragraphs work best.
+            </p>
+            <ul>
+              <li><strong>Point A:</strong> One-liner explanation</li>
+              <li><strong>Point B:</strong> One-liner explanation</li>
+              <li><strong>Point C:</strong> One-liner explanation</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Quick Reference</h2>
+            <p>
+              Use <code>&lt;code&gt;</code> for key terms, commands, shortcuts, or formulas.
+            </p>
+            <pre id="exampleBlock">Example:
+- Shortcut: Ctrl + Shift + P
+- Command: npm run build
+- Note: Keep this short and actionable</pre>
+          </section>
+        </div>
+
+        <section>
+          <h2>Notes</h2>
+          <p>
+            Optional callouts / reminders / edge cases.
+          </p>
+          <ul>
+            <li>If you add a Close button, <code>window.close()</code> is fine for the popup.</li>
+            <li>Press <code>Esc</code> to close (wired up in the script below).</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer>
+        <div class="hint">Tip: set <code>&lt;meta name="sd-preview" ...&gt;</code> for the key icon.</div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn" type="button" id="copyBtn">Copy Summary</button>
+          <button class="btn" type="button" id="closeBtn">Close</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const updatedAt = document.getElementById('updatedAt');
+      if (updatedAt) updatedAt.textContent = new Date().toLocaleString();
+
+      function closeWindow() {
+        try {
+          window.close();
+        } catch {
+          // Some browsers may block window.close() if not opened by script.
+        }
+      }
+
+      const closeBtn = document.getElementById('closeBtn');
+      if (closeBtn) closeBtn.addEventListener('click', closeWindow);
+
+      // ESC to close
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeWindow();
+      });
+
+      // Optional: Copy a short summary for sharing
+      const copyBtn = document.getElementById('copyBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const title = (document.getElementById('title')?.textContent || '').trim();
+          const subtitle = (document.getElementById('subtitle')?.textContent || '').trim();
+          const status = (document.getElementById('statusText')?.textContent || '').trim();
+
+          const summary = [title, subtitle, `Status: ${status}`].filter(Boolean).join('\n');
+          try {
+            await navigator.clipboard.writeText(summary);
+            copyBtn.textContent = 'Copied';
+            setTimeout(() => (copyBtn.textContent = 'Copy Summary'), 1200);
+          } catch {
+            // Clipboard may be unavailable; fail silently.
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

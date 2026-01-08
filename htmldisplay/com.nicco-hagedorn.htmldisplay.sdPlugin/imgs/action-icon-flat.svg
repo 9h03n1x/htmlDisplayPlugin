@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144">
+  <!-- Background window shape -->
+  <rect x="24" y="32" width="96" height="80" rx="8" ry="8" fill="#6366f1"/>
+  
+  <!-- Window header bar -->
+  <rect x="24" y="32" width="96" height="16" rx="8" ry="8" fill="#4338ca"/>
+  <rect x="24" y="40" width="96" height="8" fill="#4338ca"/>
+  
+  <!-- Window control dots -->
+  <circle cx="36" cy="40" r="3" fill="#f87171"/>
+  <circle cx="48" cy="40" r="3" fill="#fbbf24"/>
+  <circle cx="60" cy="40" r="3" fill="#34d399"/>
+  
+  <!-- HTML brackets < / > - solid white -->
+  <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left bracket < -->
+    <path d="M50 72 L38 82 L50 92"/>
+    <!-- Slash / -->
+    <line x1="68" y1="68" x2="76" y2="96"/>
+    <!-- Right bracket > -->
+    <path d="M94 72 L106 82 L94 92"/>
+  </g>
+</svg>
