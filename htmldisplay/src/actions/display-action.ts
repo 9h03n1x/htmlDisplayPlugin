@@ -52,11 +52,11 @@ export class DisplayAction extends SingletonAction<DisplaySettings> {
         await this.updateImage(ev.action.id, ev.payload.settings);
     }
 
-    override async onKeyDown(ev: KeyDownEvent<DisplaySettings>) {
+	    override async onKeyDown(ev: KeyDownEvent<DisplaySettings>) {
         this.settingsCache.set(ev.action.id, ev.payload.settings);
         const settings = ev.payload.settings;
-        const server = ServerManager.getInstance();
-        await server.start();
+	        const server = ServerManager.getInstance();
+	        await server.start();
 
         // Ensure we are listening for changes (idempotent)
         this.ensureListener();
@@ -67,25 +67,34 @@ export class DisplayAction extends SingletonAction<DisplaySettings> {
             return;
         }
 
+	        
+	        const url = `${server.getBaseUrl()}/view/${ev.action.id}`;
+	        const width = parseInt(settings.windowWidth || '800');
+	        const height = parseInt(settings.windowHeight || '600');
+	        const isMac = process.platform === 'darwin';
 
-        const url = `${server.getBaseUrl()}/view/${ev.action.id}`;
-        
-        if (settings.windowMode === 'browser') {
-            await open(url);
-        } else {
-            // Popup mode
-            const width = parseInt(settings.windowWidth || '800');
-            const height = parseInt(settings.windowHeight || '600');
-            
-            // Use 'open' with app arguments to try and create a popup-like experience
-            // Chrome/Edge support --app=URL for a window without toolbar
-            await open(url, { 
-                app: { 
-                    name: apps.chrome, 
-                    arguments: [`--app=${url}`, `--window-size=${width},${height}`] 
-                } 
-            });
-        }
+	        try {
+	            if (settings.windowMode === 'browser' || isMac) {
+	                // On macOS we always fall back to the system browser for maximum compatibility
+	                await open(url);
+	            } else {
+	                // Popup mode on platforms where we can rely on Chrome
+	                await open(url, {
+	                    app: {
+	                        name: apps.chrome,
+	                        arguments: [`--app=${url}`, `--window-size=${width},${height}`]
+	                    }
+	                });
+	            }
+	        } catch (error) {
+	            // If Chrome is not available or anything else fails, fall back to the default browser
+	            console.error('[DisplayAction] Failed to open popup/browser window, falling back to default browser:', error);
+	            try {
+	                await open(url);
+	            } catch (fallbackError) {
+	                console.error('[DisplayAction] Fallback open() also failed:', fallbackError);
+	            }
+	        }
     }
 
     private listenerRegistered = false;
@@ -101,11 +110,21 @@ export class DisplayAction extends SingletonAction<DisplaySettings> {
         });
     }
 
-    private async updateContent(actionId: string, settings: DisplaySettings) {
-        const server = ServerManager.getInstance();
-        const content = settings.sourceType === 'file' ? (settings.filePath || '') : (settings.htmlContent || '');
-        server.registerContent(actionId, settings.sourceType, content);
-    }
+	    private async updateContent(actionId: string, settings: DisplaySettings) {
+	        const server = ServerManager.getInstance();
+
+	        const sourceType = (settings.sourceType ?? 'direct') as 'direct' | 'file';
+	        let content = sourceType === 'file'
+	            ? (settings.filePath || '')
+	            : (settings.htmlContent || '');
+
+	        // Provide a safe default so the page is never completely empty
+	        if (!content && sourceType === 'direct') {
+	            content = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Info Display</title></head><body><p>No content configured for this action.</p></body></html>';
+	        }
+
+	        server.registerContent(actionId, sourceType, content);
+	    }
 
     private async updateImage(actionId: string, settings: DisplaySettings) {
         const content = settings.sourceType === 'file' ? (settings.filePath || '') : (settings.htmlContent || '');

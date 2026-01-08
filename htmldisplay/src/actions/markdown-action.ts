@@ -59,11 +59,11 @@ export class MarkdownAction extends SingletonAction<MarkdownSettings> {
         await this.updateImage(ev.action.id, ev.payload.settings);
     }
 
-    override async onKeyDown(ev: KeyDownEvent<MarkdownSettings>) {
+	    override async onKeyDown(ev: KeyDownEvent<MarkdownSettings>) {
         this.settingsCache.set(ev.action.id, ev.payload.settings);
         const settings = ev.payload.settings;
-        const server = ServerManager.getInstance();
-        await server.start();
+	        const server = ServerManager.getInstance();
+	        await server.start();
 
         this.ensureListener();
 
@@ -72,21 +72,31 @@ export class MarkdownAction extends SingletonAction<MarkdownSettings> {
             return;
         }
 
-        const url = `${server.getBaseUrl()}/view/${ev.action.id}`;
-        
-        if (settings.windowMode === 'browser') {
-            await open(url);
-        } else {
-            const width = parseInt(settings.windowWidth || '800');
-            const height = parseInt(settings.windowHeight || '600');
-            
-            await open(url, { 
-                app: { 
-                    name: apps.chrome, 
-                    arguments: [`--app=${url}`, `--window-size=${width},${height}`] 
-                } 
-            });
-        }
+	        const url = `${server.getBaseUrl()}/view/${ev.action.id}`;
+	        const width = parseInt(settings.windowWidth || '800');
+	        const height = parseInt(settings.windowHeight || '600');
+	        const isMac = process.platform === 'darwin';
+
+	        try {
+	            if (settings.windowMode === 'browser' || isMac) {
+	                // On macOS we always fall back to the system browser for maximum compatibility
+	                await open(url);
+	            } else {
+	                await open(url, {
+	                    app: {
+	                        name: apps.chrome,
+	                        arguments: [`--app=${url}`, `--window-size=${width},${height}`]
+	                    }
+	                });
+	            }
+	        } catch (error) {
+	            console.error('[MarkdownAction] Failed to open popup/browser window, falling back to default browser:', error);
+	            try {
+	                await open(url);
+	            } catch (fallbackError) {
+	                console.error('[MarkdownAction] Fallback open() also failed:', fallbackError);
+	            }
+	        }
     }
 
     private async updateContent(actionId: string, settings: MarkdownSettings) {
